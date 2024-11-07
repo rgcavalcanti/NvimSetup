@@ -7,8 +7,24 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
       },
-    config = function()
-      vim.keymap.set('n', '<C-n>', ':Neotree reveal filesystem left<CR>')
-    end
+      config = function()
+        vim.keymap.set('n', '<C-n>', ':Neotree toggle filesystem left<CR>')
+
+        require("neo-tree").setup({
+          event_handlers = {
+
+            {
+              event = "file_open_requested",
+              handler = function()
+                -- auto close
+                -- vim.cmd("Neotree close")
+                -- OR
+                require("neo-tree.command").execute({ action = "close" })
+              end
+            },
+
+          }
+        })
+      end,
     }
 }
